@@ -67,6 +67,47 @@ namespace MoviesAPI.Controllers
             return movies[pick];
         }
 
+        public List<Movy> GetKeywordTitle(string keyword)
+        {
+            MoviesEntities db = new MoviesEntities();
+            List<Movy> movies = (from c in db.Movies
+                                 where c.Title.Contains(keyword)
+                                 select c).ToList();
+
+            return movies;
+        }
+
+        public Movy GetSpecificMovie(string title)
+        {
+            MoviesEntities db = new MoviesEntities();
+
+            Movy movie = (from c in db.Movies
+                          where c.Title.ToLower() == title.ToLower()
+                          select c).Single();
+            return movie;
+        }
+
+        public List<Movy> GetRandomMovies(int quantity)
+        {
+            MoviesEntities db = new MoviesEntities();
+
+            Random random = new Random();
+            int pick = 0;
+
+            List<Movy> movies = new List<Movy>();
+            for (int i = 0; i < quantity; i++)
+            {
+                pick = random.Next(1, (db.Movies.Count() + 1));
+
+                Movy movie = (from c in db.Movies
+                              where c.Id == pick
+                              select c).Single();
+                movies.Add(movie);
+            }
+
+            return movies;
+        }
+
         // POST api/values
         public void Post([FromBody]string value)
         {

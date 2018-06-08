@@ -15,7 +15,7 @@ namespace MoviesAPI
             config.MapHttpAttributeRoutes();
 
             //TODO: Take this out when done making the API
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
 
 
             config.Routes.MapHttpRoute(
