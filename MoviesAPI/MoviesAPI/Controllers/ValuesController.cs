@@ -108,6 +108,37 @@ namespace MoviesAPI.Controllers
             return movies;
         }
 
+        public List<string> GetListOfCategories()
+        {
+            MoviesEntities db = new MoviesEntities();
+
+            string category = (from c in db.Movies
+                               where c.Id == 1
+                          select c.Category).Single();
+            List<string> categories = new List<string>();
+            categories.Add(category);
+
+            for (int i = 1; i < db.Movies.Count(); i++)
+            {
+                string picked = (from c in db.Movies
+                                 where c.Id == i
+                                 select c.Category).Single();
+                for (int x = 0; x < categories.Count; x++)
+                {
+                    if (!categories.Contains(picked))
+                    {
+                        categories.Add(picked);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                                 
+            }
+            return categories;
+        }
+
         // POST api/values
         public void Post([FromBody]string value)
         {
